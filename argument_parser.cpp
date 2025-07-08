@@ -16,13 +16,13 @@ ArgumentParser::ParseResult ArgumentParser::parse(int argc, char* argv[], FartCo
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
         
-        if (parsing_options && arg.starts_with('-') && arg.length() > 1) {
+        if (parsing_options && arg.length() > 1 && arg[0] == '-') {
             if (arg == "--") {
                 parsing_options = false;
                 continue;
             }
             
-            if (arg.starts_with("--")) {
+            if (arg.length() > 2 && arg.substr(0, 2) == "--") {
                 std::string long_option = arg.substr(2);
                 auto parse_result = parseLongOption(long_option, options);
                 if (!parse_result.success) {
